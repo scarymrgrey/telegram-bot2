@@ -44,7 +44,7 @@ namespace telegram_bot.Controllers
 				var chatId = update.Message.Chat.Id;
 				var messageId = update.Message.MessageId;
 				var message = JsonConvert.SerializeObject(update.Message);
-				var isCommand = update.Message?.Entities.Any(r => r.Type == MessageEntityType.BotCommand) ?? false;
+				var isCommand = update.Message?.Entities?.Any(r => r.Type == MessageEntityType.BotCommand) ?? false;
 				if (isCommand)
 				{
 					switch (update.Message.Text.ToLower())
