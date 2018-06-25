@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -23,7 +24,8 @@ namespace telegram_bot.Controllers
         {
             var chatId = update.Message.Chat.Id;
             var messageId = update.Message.MessageId;
-            await _bot.SendTextMessageAsync(chatId, "Hello!", replyToMessageId: messageId);
+	        var message = JsonConvert.SerializeObject(update.Message);
+            await _bot.SendTextMessageAsync(chatId, $"{message}", replyToMessageId: messageId);
         }
         
         [HttpGet]
