@@ -21,7 +21,13 @@ namespace telegram_bot.Base
             if (string.IsNullOrWhiteSpace(resp) || !resp.Contains("item-description-title-link"))
                 return "No such car";
 
-            collection.InsertOne(new Car() { Make = args[0], Model = args[1] });
+            collection.InsertOne(new Car()
+            {
+                Make = args[0],
+                Model = args[1],
+                Page = 0,
+                Complete = false
+            });
             return "Success";
         }
     }
