@@ -25,7 +25,10 @@ namespace telegram_bot.Controllers
             var chatId = update.Message.Chat.Id;
             var messageId = update.Message.MessageId;
 	        var message = JsonConvert.SerializeObject(update.Message);
-            await _bot.SendTextMessageAsync(chatId, $"{message}", replyToMessageId: messageId);
+	        if (update.Message.From.Username != "scarymrgrey")
+		        await _bot.SendTextMessageAsync(chatId, "Hello, Shkurochka! Who are you?", replyToMessageId: messageId);
+	        else
+		        await _bot.SendTextMessageAsync(chatId, $"Hello, Scary!", replyToMessageId: messageId);
         }
         
         [HttpGet]
