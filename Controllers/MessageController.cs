@@ -42,7 +42,7 @@ namespace telegram_bot.Controllers
 					var commandName = all.First().Replace("/", "");
 
 					if (!commandsDict.ContainsKey(commandName))
-						await _bot.SendTextMessageAsync(chatId, commandsDict.Keys.Aggregate((acc, res) =>  $"/{acc}\r\n {res}"));
+						await _bot.SendTextMessageAsync(chatId, commandsDict.Keys.Aggregate((acc, res) =>  $"{acc}/{res}\r\n"));
 
 					var command = Activator.CreateInstance(commandsDict[commandName]) as MessageBase;
 					await _bot.SendTextMessageAsync(chatId, command.Execute(all.Skip(1).ToArray()));

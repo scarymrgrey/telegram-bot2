@@ -24,7 +24,7 @@ namespace telegram_bot.Base
 			};
 
 			proc.Start();
-			proc.WaitForExit(30000);
+			proc.WaitForExit(5000);
 
 			return proc.StandardOutput.ReadToEnd();
 		}
