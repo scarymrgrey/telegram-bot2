@@ -69,7 +69,6 @@ namespace telegram_bot.Controllers
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				throw;
 			}
 		}
 
