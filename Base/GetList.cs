@@ -5,13 +5,17 @@ using MongoDB.Driver;
 
 namespace telegram_bot.Base
 {
-    public class GetRecords : MessageBase
+    public class GetList : MessageBase
     {
         public override string Execute(string[] args)
         {
             var collection = database.GetCollection<Car>("cars");
 
-            return collection.FindSync(r => true).ToList().Count.ToString();
+            return string.Join("\r\n", collection
+            .FindSync(r => true)
+            .ToList()
+            .Take(50)
+            .Select(r => $"{r.Make}/{r.Model}"));
         }
     }
 }
