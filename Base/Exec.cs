@@ -5,15 +5,33 @@ namespace telegram_bot.Base
 {
 	public class Exec : MessageBase
 	{
+		static string ExecuteBashCommand(string command)
+		{
+			// according to: https://stackoverflow.com/a/15262019/637142
+			// thans to this we will pass everything as one command
+			command = command.Replace("\"", "\"\"");
+
+			var proc = new Process
+			{
+				StartInfo = new ProcessStartInfo
+				{
+					FileName = "/bin/bash",
+					Arguments = "-c \"" + command + "\"",
+					UseShellExecute = false,
+					RedirectStandardOutput = true,
+					CreateNoWindow = true
+				}
+			};
+
+			proc.Start();
+			proc.WaitForExit(30000);
+
+			return proc.StandardOutput.ReadToEnd();
+		}
+
 		public override string Execute(string[] args)
 		{
-			ProcessStartInfo startInfo = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = String.Join(" ",args) };
-			Process proc = new Process() { StartInfo = startInfo, };
-			proc.Start();
-			var strOutput = proc.StandardOutput.ReadToEnd();
-			//Wait for process to finish
-			proc.WaitForExit(30000);
-			return strOutput;
+			return ExecuteBashCommand(String.Join(" ", args));
 		}
 	}
 }
