@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
@@ -9,7 +10,7 @@ namespace telegram_bot.Base
         public class Car
         {
             [BsonId]
-            public string Id { get; set; }
+            public ObjectId Id { get; set; }
             public string Make { get; set; }
             public string Model { get; set; }
         }
