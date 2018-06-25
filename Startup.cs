@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
 namespace telegram_bot
@@ -24,9 +18,9 @@ namespace telegram_bot
         TelegramBotClient InitBot()
         {
             var bot = new TelegramBotClient(Configuration["telegram_key"]);
-           // bot.SetWebhookAsync(Configuration["telegram_webhook"]).Wait();
-            //var me = bot.GetMeAsync().Result;
-            //System.Console.WriteLine($"Hello! My name is {me.FirstName}");
+            bot.SetWebhookAsync(Configuration["telegram_webhook"]).Wait();
+            var me = bot.GetMeAsync().Result;
+            Console.WriteLine($"Hello! My name is {me.FirstName}");
             return bot;
         }
 
