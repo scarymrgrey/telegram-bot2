@@ -34,8 +34,8 @@ namespace telegram_bot
 		                                                              && typeof(MessageBase).IsAssignableFrom(r)
 		                                                              && r != typeof(MessageBase))
 			    .ToDictionary(pair => pair.Name.ToLower());
-			return new CommandsContainer(dict);
-			
+
+		    return new CommandsContainer(dict);
 	    }
         public IConfiguration Configuration { get; }
 
