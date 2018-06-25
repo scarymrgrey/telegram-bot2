@@ -18,7 +18,7 @@ namespace telegram_bot.Base
                 return "Already exist!";
 
             var resp = HttpGet($"https://www.avito.ru/moskovskaya_oblast/avtomobili/{args[0]}/{args[1]}");
-            if (!resp.Contains("item-description-title-link"))
+            if (string.IsNullOrWhiteSpace(resp) || !resp.Contains("item-description-title-link"))
                 return "No such car";
 
             collection.InsertOne(new Car() { Make = args[0], Model = args[1] });
