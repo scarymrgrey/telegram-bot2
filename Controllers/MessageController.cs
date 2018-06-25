@@ -39,31 +39,38 @@ namespace telegram_bot.Controllers
 		[HttpPost("update")]
 		public async void Post([FromBody]Update update)
 		{
-			var chatId = update.Message.Chat.Id;
-			var messageId = update.Message.MessageId;
-			var message = JsonConvert.SerializeObject(update.Message);
-			var isCommand = update.Message?.Entities.Any(r => r.Type == MessageEntityType.BotCommand) ?? false;
-			if (isCommand)
+			try
 			{
-				switch (update.Message.Text.ToLower())
+				var chatId = update.Message.Chat.Id;
+				var messageId = update.Message.MessageId;
+				var message = JsonConvert.SerializeObject(update.Message);
+				var isCommand = update.Message?.Entities.Any(r => r.Type == MessageEntityType.BotCommand) ?? false;
+				if (isCommand)
 				{
-					case "//currency":
-						var resp = Get(
-							"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=RUB&apikey=Y23JNQ72WZZMP9WT");
-						var json = JsonConvert.DeserializeObject<dynamic>(resp);
-						var rate = json["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
-						await _bot.SendTextMessageAsync(chatId, $"Доллар стоит {rate} российских рубчика.");
-						break;
-					default:
-						await _bot.SendTextMessageAsync(chatId, message);
-						break;
+					switch (update.Message.Text.ToLower())
+					{
+						case "/currency":
+							var resp = Get(
+								"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=RUB&apikey=Y23JNQ72WZZMP9WT");
+							var json = JsonConvert.DeserializeObject<dynamic>(resp);
+							var rate = json["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+							await _bot.SendTextMessageAsync(chatId, $"Доллар стоит {rate} российских рубчика.");
+							break;
+						default:
+							await _bot.SendTextMessageAsync(chatId, message);
+							break;
+					}
+
+
 				}
-
-
+				else
+					await _bot.SendTextMessageAsync(chatId, message);
 			}
-			else
-				await _bot.SendTextMessageAsync(chatId, message);
-
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 
 		[HttpGet]
