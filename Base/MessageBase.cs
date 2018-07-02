@@ -28,7 +28,7 @@ namespace telegram_bot.Base
         protected IMongoDatabase database { get; set; }
         public MessageBase()
         {
-            string connectionString = "mongodb://104.41.225.182:27017";
+            string connectionString = "mongodb://mongodb:27017";
             MongoClient client = new MongoClient(connectionString);
             database = client.GetDatabase("cars");
         }

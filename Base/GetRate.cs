@@ -14,7 +14,6 @@ namespace telegram_bot.Base
     {
         public override string Execute(string[] args)
         {
-
             var collection = database.GetCollection<Car>("cars")
             .Find(_ => true)
             .ToList()
